@@ -1,7 +1,9 @@
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="CampingListController">
     <aura:attribute name="items" type="Camping_Item__c[]" />
     <aura:attribute name="newItem" type="Camping_Item__c" default="{'Price__c': 0, 'Packed__c': false, 'Quantity__c': 0, 'Name':'', 'sobjectType': 'Camping_Item__c'}" />
     
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
     <lightning:layout>
         <lightning:layoutItem padding="around-small" size="6">
             <div aria-labelledby="newCampingItem">

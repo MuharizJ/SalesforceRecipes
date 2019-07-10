@@ -5,6 +5,9 @@
 # Salesforce cache
 .sfdx/
 
+#salesforce deployment mdapi folder
+mdapi_output_dir/
+
 # Logs
 logs
 *.log
