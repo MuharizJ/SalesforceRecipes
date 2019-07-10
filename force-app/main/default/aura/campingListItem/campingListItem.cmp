@@ -19,9 +19,11 @@
             
             <p class="slds-text-heading--medium slds-p-horizontal--small"> 
                 <lightning:input type="toggle"                            
-                                 label="Packed"                           
-                                 name="Packed" 
-                                 class=" slds-text-heading--medium slds-p-around--small"
+                                 label="Packed?"                           
+                                 name="Packed"
+                                 messageToggleActive="Yes"
+                                 messageToggleInactive="No"
+                                 class="slds-p-around--small"
                                  checked="{!v.item.Packed__c}" />
             </p> 
              <aura:set attribute="footer">

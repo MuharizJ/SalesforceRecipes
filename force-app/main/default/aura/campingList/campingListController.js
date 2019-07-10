@@ -16,15 +16,26 @@
         // Send action off to be executed
         $A.enqueueAction(action);
     },
-	clickCreateItem : function(component, event, helper) {
-        var isFormValid = component.find("campingItemForm").reduce(function(isValid, inputCmp){
-        	inputCmp.showHelpMessageIfInvalid();    	
-            return isValid && inputCmp.get("v.validity").valid;
-        });
+
+    // Comes from the child component's custom event firing on a add of a new item
+    handleAddItem: function(component, event, helper) {
+        var newItem = event.getParam("item"); // the param name in the custom event
         
-        if (isFormValid) {
-            var newCampingItem = component.get("v.newItem");
-            helper.createItem(component, newCampingItem);
-        }
-	}
+        var action = component.get("c.saveItem"); // the apex controller's save method name
+        action.setParams({"item": newItem}); // "item" is the parameter name in the APEX save method
+        
+        action.setCallback(this, function(response){
+            var state = response.getState();
+            
+            if (component.isValid() && state === "SUCCESS") {
+            
+                var parsedCampingItemReturnValue = JSON.parse(JSON.stringify(response.getReturnValue())); // get the value back from the response (Apex Save Method)
+                var items = JSON.parse(JSON.stringify(component.get("v.items"))); // items is the array in the main parent component
+                
+                items.push(parsedCampingItemReturnValue);
+                component.set("v.items",items);
+            }
+        });
+        $A.enqueueAction(action);  
+    } 
 })
